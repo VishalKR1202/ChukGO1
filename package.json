@@ -1,0 +1,22 @@
+{
+  "name": "chukchukgo",
+  "version": "1.0.0",
+  "description": "Train Ticket Booking System - Frontend",
+  "main": "index.html",
+  "scripts": {
+    "start": "python run.py",
+    "dev": "python run.py",
+    "install-python": "pip install -r requirements.txt"
+  },
+  "keywords": [
+    "train",
+    "booking",
+    "railway",
+    "tickets",
+    "travel"
+  ],
+  "author": "ChukChukGO Team",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

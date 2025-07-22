@@ -72,6 +72,7 @@ class ChukChukGOApp {
         if (journeyDate) {
             const today = new Date().toISOString().split('T')[0];
             journeyDate.setAttribute('min', today);
+            journeyDate.value = today; // Set default to today
         }
     }
 

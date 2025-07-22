@@ -3,131 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChukChukGO - Indian Railway Ticket Booking</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.css">
+    <title>ChukChukGO - Your Journey Begins Here</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/new-features.css">
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="stylesheet" href="static/css/app.css">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
-    <!-- Navigation bar -->
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="assets/logo.svg" alt="ChukChukGO Logo" height="40">
+            <a class="navbar-brand" href="#home">
+                <img src="assets/logo.svg" alt="ChukChukGO" width="40" height="40" class="me-2">
                 ChukChukGO
             </a>
-            <div id="current-time" class="current-time">
-                <span id="time-display">--:--:--</span>
-                <span id="date-display" class="date-small">--/--/----</span>
+            
+            <div class="current-time d-none d-md-flex">
+                <div id="time-display">--:--</div>
+                <div id="date-display" class="date-small">-- ---</div>
             </div>
+            
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
+                        <a class="nav-link" href="#home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#pnrModal">PNR Status</a>
+                        <a class="nav-link" href="#pnr-status">PNR Status</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancellations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#travelBitesModal">
-                            <span class="text-warning">
-                                <i data-feather="coffee" class="me-1"></i>TravelBites
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contactSection">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-outline-light btn-sm ms-2" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
                     </li>
                 </ul>
+                <div id="userSection"></div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero section -->
-    <section class="hero-section">
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h1 class="display-4 text-primary fw-bold">Book Your Train Journey</h1>
-                    <p class="lead">From Platform to Destination, Seamlessly</p>
-                    <p>ChukChukGO makes train travel booking simple, fast and reliable. Search, book, and manage your train tickets with ease.</p>
-                </div>
-                <div class="col-md-6">
-                    <div class="card shadow search-card">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card search-card">
                         <div class="card-body">
-                            <h3 class="card-title text-primary mb-4">Search Trains</h3>
+                            <h2 class="card-title text-center mb-4">Book Your Train Journey</h2>
+                            
                             <form id="searchForm">
-                                <div class="row mb-3">
+                                <div class="row g-3">
                                     <div class="col-md-6">
-                                        <label for="fromStation" class="form-label">From</label>
-                                        <input type="text" class="form-control" id="fromStation" placeholder="Enter city or station" required list="stationList">
+                                        <div class="form-group">
+                                            <label for="fromStation" class="form-label">From</label>
+                                            <input type="text" class="form-control" id="fromStation" 
+                                                   placeholder="Enter departure station" required>
+                                            <div id="fromStationDropdown" class="station-dropdown"></div>
+                                        </div>
                                     </div>
+                                    
                                     <div class="col-md-6">
-                                        <label for="toStation" class="form-label">To</label>
-                                        <input type="text" class="form-control" id="toStation" placeholder="Enter city or station" required list="stationList">
+                                        <div class="form-group">
+                                            <label for="toStation" class="form-label">To</label>
+                                            <input type="text" class="form-control" id="toStation" 
+                                                   placeholder="Enter destination station" required>
+                                            <div id="toStationDropdown" class="station-dropdown"></div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
+                                    
+                                    <div class="col-md-4">
                                         <label for="journeyDate" class="form-label">Journey Date</label>
-                                        <input type="date" class="form-control" id="journeyDate" required>
+                                        <input type="date" class="form-control" id="journeyDate" 
+                                               name="journeyDate" required>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="travelClass" class="form-label">Travel Class</label>
-                                        <select class="form-select" id="travelClass" required>
-                                            <option value="">Select Class</option>
+                                    
+                                    <div class="col-md-4">
+                                        <label for="class" class="form-label">Class</label>
+                                        <select class="form-select" id="class" name="class">
+                                            <option value="">All Classes</option>
                                             <option value="SL">Sleeper (SL)</option>
                                             <option value="3A">AC 3 Tier (3A)</option>
                                             <option value="2A">AC 2 Tier (2A)</option>
                                             <option value="1A">AC First Class (1A)</option>
                                             <option value="CC">Chair Car (CC)</option>
                                             <option value="EC">Executive Class (EC)</option>
-                                            <option value="3E">AC 3 Tier Economy (3E)</option>
-                                            <option value="FC">First Class (FC)</option>
-                                            <option value="EA">Anubhuti Class (EA)</option>
-                                            <option value="2S">Second Sitting (2S)</option>
-                                            <option value="GN">General Unreserved (GN)</option>
-                                            <option value="UR">Unreserved (UR)</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
+                                    
+                                    <div class="col-md-4">
                                         <label for="passengers" class="form-label">Passengers</label>
-                                        <select class="form-select" id="passengers" required>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
+                                        <select class="form-select" id="passengers" name="passengers">
+                                            <option value="1">1 Passenger</option>
+                                            <option value="2">2 Passengers</option>
+                                            <option value="3">3 Passengers</option>
+                                            <option value="4">4 Passengers</option>
+                                            <option value="5">5 Passengers</option>
+                                            <option value="6">6 Passengers</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="quota" class="form-label">Quota</label>
-                                        <select class="form-select" id="quota">
-                                            <option value="GN">General</option>
-                                            <option value="CK">Tatkal</option>
-                                            <option value="LD">Ladies</option>
-                                            <option value="PH">Divyaang</option>
-                                            <option value="SS">Senior Citizen</option>
-                                        </select>
+                                    
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                                            <i data-feather="search"></i> Search Trains
+                                        </button>
                                     </div>
-                                </div>
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary btn-lg">Search Trains</button>
                                 </div>
                             </form>
                         </div>
@@ -137,586 +126,158 @@
         </div>
     </section>
 
-    <!-- Search Results Section (Initially Hidden) -->
-    <section id="searchResults" class="py-5 d-none">
-        <div class="container">
-            <h2 class="section-title text-center mb-4">Available Trains</h2>
-            <div class="alert alert-info">
-                <div class="d-flex">
-                    <i data-feather="info" class="me-2"></i>
-                    <div>
-                        <strong>Journey Details:</strong> <span id="journeySummary"></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Enhanced Filter Panel -->
-            <div class="row mb-4">
-                <div class="col-md-3">
-                    <div class="filter-panel card">
-                        <div class="card-header bg-primary text-white">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">Refine Results</h5>
-                                <button id="resetFilters" class="btn btn-sm btn-light">Reset Filters</button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="filter-section">
-                                <h6 class="filter-heading">JOURNEY CLASS</h6>
-                                <div class="filter-options">
-                                    <div class="form-check">
-                                        <input class="form-check-input class-filter" type="checkbox" id="class-1A" value="1A">
-                                        <label class="form-check-label" for="class-1A">AC First Class (1A)</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input class-filter" type="checkbox" id="class-2A" value="2A">
-                                        <label class="form-check-label" for="class-2A">AC 2 Tier (2A)</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input class-filter" type="checkbox" id="class-3A" value="3A">
-                                        <label class="form-check-label" for="class-3A">AC 3 Tier (3A)</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input class-filter" type="checkbox" id="class-3E" value="3E">
-                                        <label class="form-check-label" for="class-3E">AC 3 Economy (3E)</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input class-filter" type="checkbox" id="class-CC" value="CC">
-                                        <label class="form-check-label" for="class-CC">AC Chair Car (CC)</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input class-filter" type="checkbox" id="class-EC" value="EC">
-                                        <label class="form-check-label" for="class-EC">Exec. Chair Car (EC)</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input class-filter" type="checkbox" id="class-SL" value="SL">
-                                        <label class="form-check-label" for="class-SL">Sleeper (SL)</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input class-filter" type="checkbox" id="class-2S" value="2S">
-                                        <label class="form-check-label" for="class-2S">Second Sitting (2S)</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="filter-section mt-3">
-                                <h6 class="filter-heading">TRAIN TYPE</h6>
-                                <div class="filter-options">
-                                    <div class="form-check">
-                                        <input class="form-check-input train-type-filter" type="checkbox" id="type-all" value="all" checked>
-                                        <label class="form-check-label" for="type-all">All Types</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input train-type-filter" type="checkbox" id="type-rajdhani" value="rajdhani">
-                                        <label class="form-check-label" for="type-rajdhani">RAJDHANI</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input train-type-filter" type="checkbox" id="type-shatabdi" value="shatabdi">
-                                        <label class="form-check-label" for="type-shatabdi">SHATABDI</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input train-type-filter" type="checkbox" id="type-vande" value="vande">
-                                        <label class="form-check-label" for="type-vande">VANDE BHARAT</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input train-type-filter" type="checkbox" id="type-tejas" value="tejas">
-                                        <label class="form-check-label" for="type-tejas">TEJAS</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input train-type-filter" type="checkbox" id="type-other" value="other">
-                                        <label class="form-check-label" for="type-other">OTHER</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="filter-section mt-3">
-                                <h6 class="filter-heading">ADDITIONAL OPTIONS</h6>
-                                <div class="filter-options">
-                                    <div class="form-check">
-                                        <input class="form-check-input option-filter" type="checkbox" id="option-flexible-date" value="flexible">
-                                        <label class="form-check-label" for="option-flexible-date">Flexible With Date</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input option-filter" type="checkbox" id="option-available-berth" value="available">
-                                        <label class="form-check-label" for="option-available-berth">Train with Available Berth</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input option-filter" type="checkbox" id="option-disability" value="disability">
-                                        <label class="form-check-label" for="option-disability">Person With Disability Concession</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input option-filter" type="checkbox" id="option-railway-pass" value="railway-pass">
-                                        <label class="form-check-label" for="option-railway-pass">Railway Pass Concession</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input option-filter" type="checkbox" id="option-special-assistance" value="special-assistance">
-                                        <label class="form-check-label" for="option-special-assistance">Special Assistance Required?</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="result-actions d-flex justify-content-between align-items-center bg-light p-2 rounded mb-3">
-                        <div class="d-flex align-items-center">
-                            <div class="me-3">
-                                <div class="input-group input-group-sm">
-                                    <span class="input-group-text">Sort By</span>
-                                    <select class="form-select form-select-sm" id="sortTrains">
-                                        <option value="departure">Departure</option>
-                                        <option value="duration">Duration</option>
-                                        <option value="price">Price</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-check form-switch ms-2">
-                                <input class="form-check-input" type="checkbox" id="showAvailableOnly">
-                                <label class="form-check-label" for="showAvailableOnly">Show Available Trains</label>
-                            </div>
-                        </div>
-                        <div class="date-navigation">
-                            <button class="btn btn-sm btn-outline-primary" onclick="changeSearchDate(-1)">
-                                <i data-feather="chevron-left"></i> Previous Day
-                            </button>
-                            <button class="btn btn-sm btn-outline-primary" onclick="changeSearchDate(1)">
-                                Next Day <i data-feather="chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div id="trainList" class="train-list">
-                        <!-- Train results will be dynamically populated here -->
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Search Results Section -->
+    <section class="container my-5">
+        <div id="searchResults"></div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features-section py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title text-center mb-5">Why Choose ChukChukGO?</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="feature-card text-center">
-                        <div class="icon-circle mb-3">
-                            <i data-feather="search"></i>
-                        </div>
-                        <h4>Easy Search</h4>
-                        <p>Find trains quickly with our smart search feature. Filter by timing, class, and more.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="feature-card text-center">
-                        <div class="icon-circle mb-3">
-                            <i data-feather="credit-card"></i>
-                        </div>
-                        <h4>Secure Payment</h4>
-                        <p>Multiple payment options with end-to-end encryption for secure transactions.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="feature-card text-center">
-                        <div class="icon-circle mb-3">
-                            <i data-feather="smartphone"></i>
-                        </div>
-                        <h4>PNR Updates</h4>
-                        <p>Real-time PNR status updates and notifications on your booking.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-md-4 mb-4">
-                    <div class="feature-card text-center">
-                        <div class="icon-circle mb-3">
-                            <i data-feather="map"></i>
-                        </div>
-                        <h4>Journey Information</h4>
-                        <p>Detailed information about stations, platforms, and routes.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="feature-card text-center">
-                        <div class="icon-circle mb-3">
-                            <i data-feather="users"></i>
-                        </div>
-                        <h4>Group Booking</h4>
-                        <p>Easy booking for groups with special discounts and offers.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="feature-card text-center">
-                        <div class="icon-circle mb-3">
-                            <i data-feather="help-circle"></i>
-                        </div>
-                        <h4>24/7 Support</h4>
-                        <p>Round-the-clock customer support to assist with your bookings.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section class="process-section py-5">
-        <div class="container">
-            <h2 class="section-title text-center mb-5">How It Works</h2>
-            <div class="process-timeline">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="process-step">
-                            <div class="process-number">1</div>
-                            <h5>Search Trains</h5>
-                            <p>Enter your journey details including origin, destination, and travel date.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="process-step">
-                            <div class="process-number">2</div>
-                            <h5>Select Train</h5>
-                            <p>Choose from available trains and select your preferred class and seats.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="process-step">
-                            <div class="process-number">3</div>
-                            <h5>Passenger Details</h5>
-                            <p>Fill in passenger information and any special requirements.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="process-step">
-                            <div class="process-number">4</div>
-                            <h5>Payment & Confirmation</h5>
-                            <p>Make secure payment and receive instant booking confirmation.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Popular Routes Section -->
-    <section class="routes-section py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title text-center mb-5">Popular Routes</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="route-card">
-                        <h5>Delhi - Mumbai</h5>
-                        <div class="route-details">
-                            <div class="route-line">
-                                <span class="station">Delhi</span>
-                                <span class="station">Mumbai</span>
-                            </div>
-                            <p>15+ daily trains</p>
-                            <button class="btn btn-sm btn-outline-primary" onclick="presetSearch('Delhi', 'Mumbai')">Search Trains</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="route-card">
-                        <h5>Chennai - Bangalore</h5>
-                        <div class="route-details">
-                            <div class="route-line">
-                                <span class="station">Chennai</span>
-                                <span class="station">Bangalore</span>
-                            </div>
-                            <p>12+ daily trains</p>
-                            <button class="btn btn-sm btn-outline-primary" onclick="presetSearch('Chennai', 'Bangalore')">Search Trains</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="route-card">
-                        <h5>Kolkata - Patna</h5>
-                        <div class="route-details">
-                            <div class="route-line">
-                                <span class="station">Kolkata</span>
-                                <span class="station">Patna</span>
-                            </div>
-                            <p>8+ daily trains</p>
-                            <button class="btn btn-sm btn-outline-primary" onclick="presetSearch('Kolkata', 'Patna')">Search Trains</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="route-card">
-                        <h5>Hyderabad - Chennai</h5>
-                        <div class="route-details">
-                            <div class="route-line">
-                                <span class="station">Hyderabad</span>
-                                <span class="station">Chennai</span>
-                            </div>
-                            <p>6+ daily trains</p>
-                            <button class="btn btn-sm btn-outline-primary" onclick="presetSearch('Hyderabad', 'Chennai')">Search Trains</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="route-card">
-                        <h5>Delhi - Lucknow</h5>
-                        <div class="route-details">
-                            <div class="route-line">
-                                <span class="station">Delhi</span>
-                                <span class="station">Lucknow</span>
-                            </div>
-                            <p>10+ daily trains</p>
-                            <button class="btn btn-sm btn-outline-primary" onclick="presetSearch('Delhi', 'Lucknow')">Search Trains</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="route-card">
-                        <h5>Mumbai - Ahmedabad</h5>
-                        <div class="route-details">
-                            <div class="route-line">
-                                <span class="station">Mumbai</span>
-                                <span class="station">Ahmedabad</span>
-                            </div>
-                            <p>7+ daily trains</p>
-                            <button class="btn btn-sm btn-outline-primary" onclick="presetSearch('Mumbai', 'Ahmedabad')">Search Trains</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Safety Guidelines Section -->
-    <section class="safety-section py-5">
-        <div class="container">
-            <h2 class="section-title text-center mb-5">Travel Guidelines & Safety</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="safety-card">
-                        <h4><i data-feather="shield" class="me-2"></i> Railway Safety Measures</h4>
-                        <ul class="safety-list">
-                            <li>Regular cleaning and sanitization of coaches</li>
-                            <li>Security checks at station entry points</li>
-                            <li>24x7 helpline available for emergencies</li>
-                            <li>Medical facilities available at major stations</li>
-                            <li>Fire safety equipment in all coaches</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="safety-card">
-                        <h4><i data-feather="alert-triangle" class="me-2"></i> Travel Tips</h4>
-                        <ul class="safety-list">
-                            <li>Arrive at the station at least 30 minutes before departure</li>
-                            <li>Keep your ID proof ready for verification</li>
-                            <li>Check PNR status before starting your journey</li>
-                            <li>Label your luggage with your name and contact details</li>
-                            <li>Be aware of your belongings at all times</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contactSection" class="contact-section py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title text-center mb-5">Contact Us</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="contact-info">
-                        <h4>Customer Support</h4>
-                        <p><i data-feather="phone" class="me-2"></i> +91 1800-XXX-XXXX (Toll Free)</p>
-                        <p><i data-feather="mail" class="me-2"></i> support@chukchukgo.com</p>
-                        <p><i data-feather="clock" class="me-2"></i> 24/7 Customer Support</p>
+    <!-- PNR Status Section -->
+    <section id="pnr-status" class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center mb-4">Check PNR Status</h3>
                         
-                        <h4 class="mt-4">Corporate Office</h4>
-                        <p><i data-feather="map-pin" class="me-2"></i> ChukChukGO Building, Railway Colony, New Delhi - 110001</p>
-                        
-                        <div class="social-links mt-4">
-                            <a href="#" class="social-icon"><i data-feather="facebook"></i></a>
-                            <a href="#" class="social-icon"><i data-feather="twitter"></i></a>
-                            <a href="#" class="social-icon"><i data-feather="instagram"></i></a>
-                            <a href="#" class="social-icon"><i data-feather="linkedin"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="contact-form">
-                        <form id="contactForm">
+                        <form id="pnrForm">
                             <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" required>
+                                <label for="pnrNumber" class="form-label">PNR Number</label>
+                                <input type="text" class="form-control" id="pnrNumber" name="pnrNumber" 
+                                       placeholder="Enter 10-digit PNR number" pattern="[0-9]{10}" 
+                                       maxlength="10" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="subject" class="form-label">Subject</label>
-                                <input type="text" class="form-control" id="subject" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" rows="4" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i data-feather="search"></i> Check Status
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <div id="pnrResults" class="mt-4"></div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
+    <!-- Features Section -->
+    <section class="features-section bg-light">
         <div class="container">
+            <h2 class="section-title text-center">Why Choose ChukChukGO?</h2>
+            
             <div class="row">
-                <div class="col-md-3">
-                    <div class="footer-brand">
-                        <img src="assets/logo.svg" alt="ChukChukGO Logo" height="30">
-                        <h5>ChukChukGO</h5>
-                        <p>From Platform to Destination, Seamlessly</p>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-circle mb-3">
+                            <i data-feather="zap"></i>
+                        </div>
+                        <h4>Fast Booking</h4>
+                        <p>Book your tickets in under 2 minutes with our streamlined process.</p>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <h5>Quick Links</h5>
-                    <ul class="footer-links">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#pnrModal">PNR Status</a></li>
-                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancellations</a></li>
-                        <li><a href="#contactSection">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Policies</h5>
-                    <ul class="footer-links">
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Refund Policy</a></li>
-                        <li><a href="#">FAQs</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Payment Methods</h5>
-                    <div class="payment-icons">
-                        <i class="payment-icon">Visa</i>
-                        <i class="payment-icon">MC</i>
-                        <i class="payment-icon">Amex</i>
-                        <i class="payment-icon">UPI</i>
-                        <i class="payment-icon">NetBanking</i>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-circle mb-3">
+                            <i data-feather="shield"></i>
+                        </div>
+                        <h4>Secure Payments</h4>
+                        <p>Your transactions are protected with bank-level security.</p>
                     </div>
                 </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 ChukChukGO. All rights reserved.</p>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-circle mb-3">
+                            <i data-feather="clock"></i>
+                        </div>
+                        <h4>Real-time Updates</h4>
+                        <p>Get live train status and PNR updates instantly.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-circle mb-3">
+                            <i data-feather="headphones"></i>
+                        </div>
+                        <h4>24/7 Support</h4>
+                        <p>Our customer support team is always here to help you.</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
+    </section>
 
-    <!-- Modals -->
-    <!-- PNR Status Modal -->
-    <div class="modal fade" id="pnrModal" tabindex="-1" aria-labelledby="pnrModalLabel" aria-hidden="true">
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="pnrModalLabel">Check PNR Status</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title">Login / Register</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="pnrForm">
-                        <div class="mb-3">
-                            <label for="pnrNumber" class="form-label">PNR Number</label>
-                            <input type="text" class="form-control" id="pnrNumber" placeholder="Enter 10-digit PNR number" required pattern="[0-9]{10}">
-                            <div class="form-text">Enter your 10-digit PNR number to check the current status.</div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Check Status</button>
-                    </form>
-                    <div id="pnrResult" class="mt-4 d-none">
-                        <!-- PNR results will be shown here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cancellation Modal -->
-    <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cancelModalLabel">Cancellation & Refund Policy</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <nav>
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button class="nav-link active" id="nav-policy-tab" data-bs-toggle="tab" data-bs-target="#nav-policy" type="button" role="tab">Cancellation Policy</button>
-                            <button class="nav-link" id="nav-cancel-tab" data-bs-toggle="tab" data-bs-target="#nav-cancel" type="button" role="tab">Cancel Ticket</button>
-                        </div>
-                    </nav>
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active p-3" id="nav-policy" role="tabpanel">
-                            <h5>Cancellation Rules</h5>
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Cancellation Timing</th>
-                                            <th>Refund Percentage</th>
-                                            <th>Cancellation Fee</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>More than 48 hours before departure</td>
-                                            <td>100% minus cancellation fee</td>
-                                            <td>₹ 240 for AC classes, ₹ 120 for Sleeper</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Between 48 and 12 hours before departure</td>
-                                            <td>75% minus cancellation fee</td>
-                                            <td>₹ 240 for AC classes, ₹ 120 for Sleeper</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Between 12 and 6 hours before departure</td>
-                                            <td>50% minus cancellation fee</td>
-                                            <td>₹ 240 for AC classes, ₹ 120 for Sleeper</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Less than 6 hours before departure</td>
-                                            <td>No refund</td>
-                                            <td>Entire amount</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            <h5 class="mt-4">Special Conditions</h5>
-                            <ul>
-                                <li>Tatkal tickets: Non-refundable except when cancelled by railways.</li>
-                                <li>VIKALP tickets: Refund as per normal cancellation rules.</li>
-                                <li>Train cancellation: Full refund without cancellation charges.</li>
-                                <li>Partial cancellations allowed for group bookings with applicable charges.</li>
-                            </ul>
-                            
-                            <h5 class="mt-4">Refund Process</h5>
-                            <p>Refunds are processed automatically to the original payment method used for booking. It can take 5-7 working days for the refund to reflect in your account. For any refund-related queries, please contact our customer support.</p>
-                        </div>
-                        <div class="tab-pane fade p-3" id="nav-cancel" role="tabpanel">
-                            <form id="cancelTicketForm">
+                    <ul class="nav nav-tabs" id="authTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#login" type="button" role="tab">Login</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="register-tab" data-bs-toggle="tab" 
+                                    data-bs-target="#register" type="button" role="tab">Register</button>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content mt-3" id="authTabContent">
+                        <div class="tab-pane fade show active" id="login" role="tabpanel">
+                            <form id="loginForm">
                                 <div class="mb-3">
-                                    <label for="pnrCancel" class="form-label">PNR Number</label>
-                                    <input type="text" class="form-control" id="pnrCancel" placeholder="Enter 10-digit PNR number" required pattern="[0-9]{10}">
+                                    <label for="loginUsername" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="loginUsername" 
+                                           name="username" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="emailCancel" class="form-label">Registered Email</label>
-                                    <input type="email" class="form-control" id="emailCancel" placeholder="Email used during booking" required>
+                                    <label for="loginPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="loginPassword" 
+                                           name="password" required>
                                 </div>
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="confirmCancel" required>
-                                    <label class="form-check-label" for="confirmCancel">I understand and agree to the cancellation policy</label>
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                            </form>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="register" role="tabpanel">
+                            <form id="registerForm">
+                                <div class="mb-3">
+                                    <label for="registerUsername" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="registerUsername" 
+                                           name="username" required>
                                 </div>
-                                <button type="submit" class="btn btn-danger">Proceed to Cancel</button>
+                                <div class="mb-3">
+                                    <label for="registerEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="registerEmail" 
+                                           name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registerFullName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="registerFullName" 
+                                           name="fullName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registerPhone" class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" id="registerPhone" 
+                                           name="phone" pattern="[6-9][0-9]{9}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registerPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="registerPassword" 
+                                           name="password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirmPassword" 
+                                           name="confirmPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Register</button>
                             </form>
                         </div>
                     </div>
@@ -725,809 +286,83 @@
         </div>
     </div>
 
-    <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Login to ChukChukGO</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="loginForm">
-                        <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="loginEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="loginPassword" required>
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMe">
-                            <label class="form-check-label" for="rememberMe">Remember me</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
-                        <div class="text-center mt-3">
-                            <a href="#" class="text-decoration-none">Forgot password?</a>
-                        </div>
-                    </form>
-                    <hr>
-                    <div class="text-center">
-                        <p>Don't have an account?</p>
-                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Register Now</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Register Modal -->
-    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registerModalLabel">Create Account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="registerForm">
-                        <div class="mb-3">
-                            <label for="fullName" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="fullName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerEmail" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="registerEmail" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="phoneNumber" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" id="phoneNumber" pattern="[0-9]{10}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="registerPassword" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirmPassword" required>
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="termsAgree" required>
-                            <label class="form-check-label" for="termsAgree">I agree to the Terms of Service and Privacy Policy</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Register</button>
-                    </form>
-                    <hr>
-                    <div class="text-center">
-                        <p>Already have an account?</p>
-                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Login</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Booking Modal -->
-    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="bookingModalLabel">Passenger Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="trainBookingDetails" class="alert alert-info mb-4">
-                        <!-- Train details will be shown here -->
-                    </div>
-                    
-                    <form id="passengerForm">
-                        <div id="passengerDetails">
-                            <!-- Passenger forms will be added dynamically here -->
-                        </div>
-                        
-                        <h5 class="mt-4">Contact Information</h5>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="contactPhone" class="form-label">Mobile Number</label>
-                                <input type="tel" class="form-control" id="contactPhone" pattern="[0-9]{10}" required>
-                                <div class="form-text">Your ticket and updates will be sent to this number</div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="contactEmail" class="form-label">Email Address</label>
-                                <input type="email" class="form-control" id="contactEmail" required>
-                            </div>
-                        </div>
-                        
-                        <h5 class="mt-4">Travel Preferences</h5>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="seatPreference" class="form-label">Seat Preference</label>
-                                <select class="form-select" id="seatPreference">
-                                    <option value="no">No Preference</option>
-                                    <option value="lower">Lower Berth</option>
-                                    <option value="middle">Middle Berth</option>
-                                    <option value="upper">Upper Berth</option>
-                                    <option value="side-lower">Side Lower</option>
-                                    <option value="side-upper">Side Upper</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="mealPreference" class="form-label">Meal Preference</label>
-                                <select class="form-select" id="mealPreference">
-                                    <option value="none">No Meal</option>
-                                    <option value="veg">Vegetarian</option>
-                                    <option value="non-veg">Non-Vegetarian</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="travelInsurance">
-                            <label class="form-check-label" for="travelInsurance">Add Travel Insurance for ₹15 per passenger</label>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary w-100">Continue to Payment</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Payment Modal -->
-    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="paymentModalLabel">Payment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <nav>
-                                <div class="nav nav-tabs" id="payment-tab" role="tablist">
-                                    <button class="nav-link active" id="credit-tab" data-bs-toggle="tab" data-bs-target="#credit-content" type="button" role="tab">Credit/Debit Card</button>
-                                    <button class="nav-link" id="upi-tab" data-bs-toggle="tab" data-bs-target="#upi-content" type="button" role="tab">UPI</button>
-                                    <button class="nav-link" id="netbanking-tab" data-bs-toggle="tab" data-bs-target="#netbanking-content" type="button" role="tab">Net Banking</button>
-                                    <button class="nav-link" id="wallet-tab" data-bs-toggle="tab" data-bs-target="#wallet-content" type="button" role="tab">Wallets</button>
-                                </div>
-                            </nav>
-                            <div class="tab-content p-3 border border-top-0 rounded-bottom" id="payment-content">
-                                <div class="tab-pane fade show active" id="credit-content" role="tabpanel">
-                                    <form id="cardPaymentForm">
-                                        <div class="mb-3">
-                                            <label for="cardNumber" class="form-label">Card Number</label>
-                                            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="expiryDate" class="form-label">Expiry Date</label>
-                                                <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" required>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="cvv" class="form-label">CVV</label>
-                                                <input type="password" class="form-control" id="cvv" maxlength="3" required>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="cardName" class="form-label">Name on Card</label>
-                                            <input type="text" class="form-control" id="cardName" required>
-                                        </div>
-                                        <button type="button" class="btn btn-primary" onclick="processPayment('card')">Pay Now</button>
-                                    </form>
-                                </div>
-                                <div class="tab-pane fade" id="upi-content" role="tabpanel">
-                                    <form id="upiForm">
-                                        <div class="mb-3">
-                                            <label for="upiId" class="form-label">UPI ID</label>
-                                            <input type="text" class="form-control" id="upiId" placeholder="yourid@upi" required>
-                                        </div>
-                                        <button type="button" class="btn btn-primary" onclick="processPayment('upi')">Pay Now</button>
-                                    </form>
-                                </div>
-                                <div class="tab-pane fade" id="netbanking-content" role="tabpanel">
-                                    <form id="netbankingForm">
-                                        <div class="mb-3">
-                                            <label for="bankSelect" class="form-label">Select Bank</label>
-                                            <select class="form-select" id="bankSelect" required>
-                                                <option value="">Select a Bank</option>
-                                                <option value="sbi">State Bank of India</option>
-                                                <option value="hdfc">HDFC Bank</option>
-                                                <option value="icici">ICICI Bank</option>
-                                                <option value="axis">Axis Bank</option>
-                                                <option value="pnb">Punjab National Bank</option>
-                                                <option value="other">Other Banks</option>
-                                            </select>
-                                        </div>
-                                        <button type="button" class="btn btn-primary" onclick="processPayment('netbanking')">Continue to Bank Payment Page</button>
-                                    </form>
-                                </div>
-                                <div class="tab-pane fade" id="wallet-content" role="tabpanel">
-                                    <form id="walletForm">
-                                        <div class="mb-3">
-                                            <label class="form-label">Select Wallet</label>
-                                            <div class="row wallet-options">
-                                                <div class="col-6 col-md-4 mb-3">
-                                                    <div class="form-check wallet-option">
-                                                        <input class="form-check-input" type="radio" name="wallet" id="paytm" value="paytm" required>
-                                                        <label class="form-check-label" for="paytm">Paytm</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6 col-md-4 mb-3">
-                                                    <div class="form-check wallet-option">
-                                                        <input class="form-check-input" type="radio" name="wallet" id="phonepe" value="phonepe">
-                                                        <label class="form-check-label" for="phonepe">PhonePe</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6 col-md-4 mb-3">
-                                                    <div class="form-check wallet-option">
-                                                        <input class="form-check-input" type="radio" name="wallet" id="amazonpay" value="amazonpay">
-                                                        <label class="form-check-label" for="amazonpay">Amazon Pay</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6 col-md-4 mb-3">
-                                                    <div class="form-check wallet-option">
-                                                        <input class="form-check-input" type="radio" name="wallet" id="freecharge" value="freecharge">
-                                                        <label class="form-check-label" for="freecharge">Freecharge</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6 col-md-4 mb-3">
-                                                    <div class="form-check wallet-option">
-                                                        <input class="form-check-input" type="radio" name="wallet" id="mobikwik" value="mobikwik">
-                                                        <label class="form-check-label" for="mobikwik">MobiKwik</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button type="button" class="btn btn-primary" onclick="processPayment('wallet')">Pay Now</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="payment-summary">
-                                <h5>Booking Summary</h5>
-                                <div id="paymentSummary">
-                                    <!-- Will be filled dynamically -->
-                                </div>
-                                <hr>
-                                <div class="d-flex justify-content-between">
-                                    <strong>Total Amount:</strong>
-                                    <strong id="totalFare">₹ 0</strong>
-                                </div>
-                                <div class="mt-3 payment-security">
-                                    <small><i data-feather="lock" class="me-1"></i> Your payment is secure and encrypted</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Success Modal -->
-    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title" id="successModalLabel">Booking Confirmed!</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <div class="success-icon mb-4">
-                        <i data-feather="check-circle" width="60" height="60" stroke="#28a745"></i>
-                    </div>
-                    <h4>Your ticket has been booked successfully</h4>
-                    <p class="mb-4">Your PNR number is: <strong id="confirmationPNR">1234567890</strong></p>
-                    <p>Booking details have been sent to your email and phone number.</p>
-                    <div class="alert alert-info mt-3">
-                        <small><i data-feather="info" class="me-1"></i> Please keep your ID proof ready for verification during travel.</small>
-                    </div>
-                    <div id="downloadTicketContainer" class="mt-4">
-                        <!-- E-ticket download button will be added here by JavaScript -->
-                        <button class="btn btn-outline-secondary">Print Ticket</button>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Done</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Station List Datalist -->
-    <datalist id="stationList">
-        <option value="Delhi">Delhi (DLI)</option>
-        <option value="Mumbai">Mumbai (CSTM)</option>
-        <option value="Kolkata">Kolkata (HWH)</option>
-        <option value="Chennai">Chennai (MAS)</option>
-        <option value="Bangalore">Bangalore (SBC)</option>
-        <option value="Hyderabad">Hyderabad (SC)</option>
-        <option value="Ahmedabad">Ahmedabad (ADI)</option>
-        <option value="Pune">Pune (PUNE)</option>
-        <option value="Jaipur">Jaipur (JP)</option>
-        <option value="Lucknow">Lucknow (LKO)</option>
-        <option value="Kanpur">Kanpur (CNB)</option>
-        <option value="Nagpur">Nagpur (NGP)</option>
-        <option value="Patna">Patna (PNBE)</option>
-        <option value="Bhopal">Bhopal (BPL)</option>
-        <option value="Indore">Indore (INDB)</option>
-        <option value="Chandigarh">Chandigarh (CDG)</option>
-        <option value="Guwahati">Guwahati (GHY)</option>
-        <option value="Cochin">Cochin (ERS)</option>
-        <option value="Trivandrum">Trivandrum (TVC)</option>
-        <option value="Vadodara">Vadodara (BRC)</option>
-    </datalist>
-
-    <!-- Scripts -->
-    <script src="static/js/api.js"></script>
-    <script src="static/js/app.js"></script>
-    
     <!-- Loading Indicator -->
     <div id="loadingIndicator">
         <div class="loading-spinner"></div>
     </div>
-    <script src="js/main.js"></script>
-    <script>
-        // Initialize Feather icons
-        document.addEventListener('DOMContentLoaded', function() {
-            feather.replace();
-        });
-    </script>
 
-    <!-- Train Schedule Modal -->
-    <div class="modal fade" id="trainScheduleModal" tabindex="-1" aria-labelledby="trainScheduleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="trainScheduleModalLabel">Train Schedule</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="train-schedule-container">
-                        <div class="train-info-header">
-                            <table class="table table-bordered">
-                                <thead class="table-primary">
-                                    <tr>
-                                        <th>Train Number</th>
-                                        <th>Train Name</th>
-                                        <th>From Station</th>
-                                        <th>Destination Station</th>
-                                        <th>Runs On</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td id="scheduleTrainNumber"></td>
-                                        <td id="scheduleTrainName"></td>
-                                        <td id="scheduleFromStation"></td>
-                                        <td id="scheduleToStation"></td>
-                                        <td id="scheduleRunsOn">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                        <div class="train-stops mt-4">
-                            <table class="table table-bordered table-striped">
-                                <thead class="table-primary">
-                                    <tr>
-                                        <th>S.N.</th>
-                                        <th>Station Code</th>
-                                        <th>Station Name</th>
-                                        <th>Route Number</th>
-                                        <th>Arrival Time</th>
-                                        <th>Departure Time</th>
-                                        <th>Halt Time(in minutes)</th>
-                                        <th>Distance</th>
-                                        <th>Day</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="trainStopsBody">
-                                    <!-- Train stops will be dynamically populated here -->
-                                </tbody>
-                            </table>
-                        </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-brand">
+                        <img src="assets/logo.svg" alt="ChukChukGO" width="40" height="40" class="me-2">
+                        <h5>ChukChukGO</h5>
+                        <p>Your trusted partner for train travel across India. Book with confidence, travel with comfort.</p>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Future Availability Modal -->
-    <div class="modal fade" id="futureAvailabilityModal" tabindex="-1" aria-labelledby="futureAvailabilityModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="futureAvailabilityModalLabel">Check Future Availability</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="train-future-availability-info mb-3">
-                        <h6 id="availabilityTrainInfo"></h6>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <span id="availabilityFromStation"></span>
-                                <span class="mx-2">to</span>
-                                <span id="availabilityToStation"></span>
-                            </div>
-                            <div>
-                                <select class="form-select form-select-sm" id="availabilityClassSelect">
-                                    <option value="SL">Sleeper (SL)</option>
-                                    <option value="3A">AC 3 Tier (3A)</option>
-                                    <option value="2A">AC 2 Tier (2A)</option>
-                                    <option value="1A">AC First Class (1A)</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="future-dates-table">
-                        <table class="table table-bordered table-hover">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Availability</th>
-                                    <th>Status</th>
-                                    <th>Fare</th>
-                                </tr>
-                            </thead>
-                            <tbody id="futureDatesBody">
-                                <!-- Future dates will be dynamically populated here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- TravelBites Food Ordering Modal -->
-    <div class="modal fade" id="travelBitesModal" tabindex="-1" aria-labelledby="travelBitesModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h5 class="modal-title text-white" id="travelBitesModalLabel">
-                        <i data-feather="coffee" class="me-2"></i>TravelBites - Food Delivery
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="travelbites-intro mb-4">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <h4>Delicious Meals Delivered to Your Seat!</h4>
-                                <p class="text-muted">Order quality food for your journey. Delivered fresh directly to your seat at selected stations.</p>
-                                <div class="features d-flex flex-wrap gap-3 mt-3">
-                                    <span class="badge bg-success"><i data-feather="check-circle" class="me-1"></i> Hygienic Packaging</span>
-                                    <span class="badge bg-success"><i data-feather="check-circle" class="me-1"></i> Contactless Delivery</span>
-                                    <span class="badge bg-success"><i data-feather="check-circle" class="me-1"></i> Quality Assured</span>
-                                    <span class="badge bg-success"><i data-feather="check-circle" class="me-1"></i> On-time Delivery</span>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <div class="travelbites-logo">
-                                    <img src="attached_assets/TravelBites logo.jpeg" alt="TravelBites Logo" class="img-fluid" style="max-width: 150px;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <ul class="nav nav-tabs mb-4" id="travelBitesTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="order-food-tab" data-bs-toggle="tab" data-bs-target="#order-food-content" type="button" role="tab">Order Food</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="track-order-tab" data-bs-toggle="tab" data-bs-target="#track-order-content" type="button" role="tab">Track Order</button>
-                        </li>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#pnr-status">PNR Status</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#contact">Contact</a></li>
                     </ul>
-                    
-                    <div class="tab-content">
-                        <!-- Order Food Tab -->
-                        <div class="tab-pane fade show active" id="order-food-content" role="tabpanel">
-                            <div class="card mb-4">
-                                <div class="card-header bg-light">
-                                    <h5 class="mb-0">Order Food for Your Journey</h5>
-                                </div>
-                                <div class="card-body">
-                                    <form id="foodOrderForm">
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <label for="pnrNumber" class="form-label">PNR Number</label>
-                                                <input type="text" class="form-control" id="pnrNumber" placeholder="Enter your PNR" required>
-                                                <div class="form-text">Enter PNR to verify your journey details</div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="deliveryStation" class="form-label">Delivery Station</label>
-                                                <select class="form-select" id="deliveryStation" required disabled>
-                                                    <option value="">Select station after PNR verification</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="d-grid">
-                                            <button type="button" id="verifyPnrBtn" class="btn btn-primary">Verify PNR & Continue</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Track Order Tab -->
-                        <div class="tab-pane fade" id="track-order-content" role="tabpanel">
-                            <div class="card mb-4">
-                                <div class="card-header bg-light">
-                                    <h5 class="mb-0">Track Your Food Order</h5>
-                                </div>
-                                <div class="card-body">
-                                    <form id="trackOrderForm">
-                                        <div class="mb-3">
-                                            <label for="trackPnrNumber" class="form-label">PNR Number</label>
-                                            <input type="text" class="form-control" id="trackPnrNumber" placeholder="Enter your PNR" required>
-                                        </div>
-                                        <div class="d-grid">
-                                            <button type="button" id="trackOrderBtn" class="btn btn-primary" onclick="trackFoodOrder()">Track Order</button>
-                                        </div>
-                                    </form>
-                                    
-                                    <div id="orderTrackingResult" class="mt-4 d-none">
-                                        <h6 class="border-bottom pb-2 mb-3">Order Status</h6>
-                                        <div id="orderStatusContent"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                        
-                        <div id="menuSection" class="d-none">
-                            <h5 class="menu-title mb-3">Select Food Items</h5>
-                            
-                            <div class="food-menu-tabs">
-                                <ul class="nav nav-tabs mb-3" id="foodMenuTabs" role="tablist">
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="veg-tab" data-bs-toggle="tab" data-bs-target="#veg-meals" type="button" role="tab">Veg Meals</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="nonveg-tab" data-bs-toggle="tab" data-bs-target="#nonveg-meals" type="button" role="tab">Non-Veg Meals</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="snacks-tab" data-bs-toggle="tab" data-bs-target="#snacks" type="button" role="tab">Snacks & Beverages</button>
-                                    </li>
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="regional-tab" data-bs-toggle="tab" data-bs-target="#regional" type="button" role="tab">Regional Specialties</button>
-                                    </li>
-                                </ul>
-                                
-                                <div class="tab-content" id="foodMenuContent">
-                                    <!-- Veg Meals Tab -->
-                                    <div class="tab-pane fade show active" id="veg-meals" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="food-item card mb-3">
-                                                    <div class="card-body">
-                                                        <div class="d-flex justify-content-between">
-                                                            <div>
-                                                                <h6 class="food-name">Veg Thali</h6>
-                                                                <p class="food-desc text-muted small">Rice, 3 Rotis, Dal, Mixed Veg, Curd, Pickle</p>
-                                                                <span class="food-price">₹150</span>
-                                                            </div>
-                                                            <div class="food-actions">
-                                                                <div class="item-counter">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn decrement">-</button>
-                                                                    <input type="number" class="form-control form-control-sm counter-input" value="0" min="0" max="10">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn increment">+</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="food-item card mb-3">
-                                                    <div class="card-body">
-                                                        <div class="d-flex justify-content-between">
-                                                            <div>
-                                                                <h6 class="food-name">Paneer Deluxe</h6>
-                                                                <p class="food-desc text-muted small">Paneer Butter Masala, 4 Rotis, Jeera Rice, Dessert</p>
-                                                                <span class="food-price">₹180</span>
-                                                            </div>
-                                                            <div class="food-actions">
-                                                                <div class="item-counter">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn decrement">-</button>
-                                                                    <input type="number" class="form-control form-control-sm counter-input" value="0" min="0" max="10">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn increment">+</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Non-Veg Meals Tab -->
-                                    <div class="tab-pane fade" id="nonveg-meals" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="food-item card mb-3">
-                                                    <div class="card-body">
-                                                        <div class="d-flex justify-content-between">
-                                                            <div>
-                                                                <h6 class="food-name">Chicken Biryani</h6>
-                                                                <p class="food-desc text-muted small">Fragrant basmati rice with spiced chicken pieces</p>
-                                                                <span class="food-price">₹220</span>
-                                                            </div>
-                                                            <div class="food-actions">
-                                                                <div class="item-counter">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn decrement">-</button>
-                                                                    <input type="number" class="form-control form-control-sm counter-input" value="0" min="0" max="10">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn increment">+</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="food-item card mb-3">
-                                                    <div class="card-body">
-                                                        <div class="d-flex justify-content-between">
-                                                            <div>
-                                                                <h6 class="food-name">Egg Curry Meal</h6>
-                                                                <p class="food-desc text-muted small">Egg curry with 3 rotis and jeera rice</p>
-                                                                <span class="food-price">₹170</span>
-                                                            </div>
-                                                            <div class="food-actions">
-                                                                <div class="item-counter">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn decrement">-</button>
-                                                                    <input type="number" class="form-control form-control-sm counter-input" value="0" min="0" max="10">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn increment">+</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Snacks Tab -->
-                                    <div class="tab-pane fade" id="snacks" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="food-item card mb-3">
-                                                    <div class="card-body">
-                                                        <div class="d-flex justify-content-between">
-                                                            <div>
-                                                                <h6 class="food-name">Samosa (2 pcs)</h6>
-                                                                <p class="food-desc text-muted small">Crispy fried pastry with savory filling</p>
-                                                                <span class="food-price">₹60</span>
-                                                            </div>
-                                                            <div class="food-actions">
-                                                                <div class="item-counter">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn decrement">-</button>
-                                                                    <input type="number" class="form-control form-control-sm counter-input" value="0" min="0" max="10">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn increment">+</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="food-item card mb-3">
-                                                    <div class="card-body">
-                                                        <div class="d-flex justify-content-between">
-                                                            <div>
-                                                                <h6 class="food-name">Chai & Biscuits</h6>
-                                                                <p class="food-desc text-muted small">Masala chai with assorted biscuits</p>
-                                                                <span class="food-price">₹45</span>
-                                                            </div>
-                                                            <div class="food-actions">
-                                                                <div class="item-counter">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn decrement">-</button>
-                                                                    <input type="number" class="form-control form-control-sm counter-input" value="0" min="0" max="10">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn increment">+</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Regional Tab -->
-                                    <div class="tab-pane fade" id="regional" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="food-item card mb-3">
-                                                    <div class="card-body">
-                                                        <div class="d-flex justify-content-between">
-                                                            <div>
-                                                                <h6 class="food-name">South Indian Platter</h6>
-                                                                <p class="food-desc text-muted small">Idli, Vada, Dosa with Sambhar and Chutney</p>
-                                                                <span class="food-price">₹160</span>
-                                                            </div>
-                                                            <div class="food-actions">
-                                                                <div class="item-counter">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn decrement">-</button>
-                                                                    <input type="number" class="form-control form-control-sm counter-input" value="0" min="0" max="10">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn increment">+</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="food-item card mb-3">
-                                                    <div class="card-body">
-                                                        <div class="d-flex justify-content-between">
-                                                            <div>
-                                                                <h6 class="food-name">Punjabi Chole Bhature</h6>
-                                                                <p class="food-desc text-muted small">Spiced chickpeas curry with fried bread</p>
-                                                                <span class="food-price">₹140</span>
-                                                            </div>
-                                                            <div class="food-actions">
-                                                                <div class="item-counter">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn decrement">-</button>
-                                                                    <input type="number" class="form-control form-control-sm counter-input" value="0" min="0" max="10">
-                                                                    <button class="btn btn-sm btn-outline-secondary counter-btn increment">+</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="order-summary mt-4">
-                                <div class="card">
-                                    <div class="card-header bg-light">
-                                        <h5 class="mb-0">Order Summary</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <div id="orderItemsList">
-                                            <p class="text-center text-muted">No items selected</p>
-                                        </div>
-                                        <hr>
-                                        <div class="d-flex justify-content-between">
-                                            <span>Subtotal:</span>
-                                            <span id="subtotalAmount">₹0</span>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <span>Delivery Charge:</span>
-                                            <span id="deliveryCharge">₹25</span>
-                                        </div>
-                                        <div class="d-flex justify-content-between fw-bold mt-2">
-                                            <span>Total:</span>
-                                            <span id="totalAmount">₹25</span>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="d-grid">
-                                            <button id="placeOrderBtn" class="btn btn-warning">Place Food Order</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Services</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Train Booking</a></li>
+                        <li><a href="#">PNR Enquiry</a></li>
+                        <li><a href="#">Seat Availability</a></li>
+                        <li><a href="#">Train Schedule</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Support</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Cancellation</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Payment Partners</h5>
+                    <div class="payment-icons">
+                        <span class="payment-icon">Visa</span>
+                        <span class="payment-icon">MasterCard</span>
+                        <span class="payment-icon">UPI</span>
+                        <span class="payment-icon">Paytm</span>
+                        <span class="payment-icon">PhonePe</span>
                     </div>
                 </div>
             </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ChukChukGO. All rights reserved. | Made with ❤️ for Indian Railways</p>
+            </div>
         </div>
-    </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- API Client -->
+    <script src="static/js/api.js"></script>
+    
+    <!-- Main Application -->
+    <script src="static/js/app.js"></script>
+    
+    <!-- Initialize Feather Icons -->
+    <script>
+        feather.replace();
+    </script>
 </body>
 </html>

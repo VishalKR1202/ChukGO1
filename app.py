@@ -5,7 +5,7 @@ import json
 from datetime import datetime, timedelta
 import random
 import string
-import bcrypt
+import hashlib
 from dotenv import load_dotenv
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -224,11 +224,10 @@ def generate_pnr():
     return ''.join(random.choices(string.digits, k=10))
 
 def hash_password(password):
-    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
 def verify_password(password, hashed):
-    return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
-
+    return hashlib.sha256(password.encode('utf-8')).hexdigest() == hashed
 # Routes
 @app.route('/')
 def index():
