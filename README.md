@@ -1,280 +1,214 @@
-# 🚂 ChukChukGO - Indian Railway Ticket Booking System
+# ChukChukGO - Train Ticket Booking System
 
-A comprehensive web-based train ticket booking platform that simulates the Indian Railways booking experience. Built with modern web technologies, it provides a complete solution for searching trains, booking tickets, managing PNR status, and even ordering food during journeys.
+A modern train ticket booking system with HTML/CSS/JavaScript frontend and Python Flask backend.
 
-![ChukChukGO Logo](assets/logo.svg)
+## Features
 
-## ✨ Features
+- **Train Search**: Search trains between stations with real-time availability
+- **Ticket Booking**: Complete booking flow with passenger details and payment
+- **PNR Status**: Check booking status and passenger details
+- **Ticket Cancellation**: Cancel bookings with refund calculation
+- **User Authentication**: Register and login functionality
+- **Responsive Design**: Mobile-friendly interface
 
-### 🎫 Core Booking Features
-- **Train Search**: Search trains between stations with date and class preferences
-- **Ticket Booking**: Complete booking flow with passenger details
-- **PNR Status**: Check booking status using PNR numbers
-- **Cancellation**: Cancel bookings with refund processing
-- **Multiple Travel Classes**: Support for all Indian Railways classes (SL, 3A, 2A, 1A, CC, EC, etc.)
-- **Quota System**: General, Tatkal, Ladies, Divyaang, Senior Citizen quotas
-
-### 🍽️ TravelBites - Food Ordering
-- **In-Journey Food Orders**: Order food for delivery at specific stations
-- **Menu Management**: Browse and select from various food items
-- **Order Tracking**: Track food order status and delivery
-- **PNR Integration**: Link food orders to train bookings
-
-### 👤 User Management
-- **User Registration & Login**: Secure user authentication system
-- **Profile Management**: Store user details and preferences
-- **Booking History**: View past and current bookings
-
-### 🎨 Modern UI/UX
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
-- **Bootstrap 5**: Modern, clean interface with professional styling
-- **Real-time Updates**: Live time display and dynamic content updates
-- **Interactive Elements**: Smooth animations and user-friendly interactions
-
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Frontend
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with custom components
-- **JavaScript (ES6+)** - Interactive functionality
-- **Bootstrap 5** - Responsive UI framework
-- **Feather Icons** - Beautiful iconography
+- **HTML5**: Semantic markup and structure
+- **CSS3**: Modern styling with Bootstrap 5
+- **JavaScript**: Vanilla JS with modern ES6+ features
+- **Bootstrap 5**: Responsive UI framework
+- **Feather Icons**: Beautiful icon set
 
 ### Backend
-- **Python Flask** - RESTful API server
-- **PostgreSQL** - Relational database
-- **psycopg2** - PostgreSQL adapter for Python
+- **Python 3.11+**: Core backend language
+- **Flask**: Lightweight web framework
+- **PostgreSQL**: Relational database
+- **psycopg2**: PostgreSQL adapter
+- **bcrypt**: Password hashing
+- **python-dotenv**: Environment variable management
 
-### Additional Technologies
-- **Node.js** - Development environment
-- **Java** - Legacy servlet components (optional)
-- **Stripe** - Payment processing integration
+## Installation
 
-## 📋 Prerequisites
+### Prerequisites
+- Python 3.11 or higher
+- PostgreSQL 12 or higher
+- pip (Python package manager)
 
-Before running this application, ensure you have the following installed:
+### Setup
 
-- **Python 3.11+**
-- **Node.js 20+**
-- **PostgreSQL 16+**
-- **Java** (for legacy components)
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd chukchukgo
+   ```
 
-## 🚀 Installation & Setup
+2. **Install Python dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### 1. Clone the Repository
-```bash
-git clone <repository-url>
-cd TrainTicketPro
-```
+3. **Database Setup**
+   - Create a PostgreSQL database named `chukchukgo`
+   - Update database credentials in `.env` file
 
-### 2. Install Dependencies
+4. **Environment Configuration**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your database credentials
+   ```
 
-#### Python Dependencies
-```bash
-pip install flask psycopg2-binary
-```
+5. **Run the application**
+   ```bash
+   python run.py
+   ```
 
-#### Node.js Dependencies
-```bash
-npm install
-```
+6. **Access the application**
+   - Open your browser and go to `http://localhost:5000`
 
-### 3. Database Setup
-
-#### Option A: Using PostgreSQL
-1. Create a PostgreSQL database
-2. Set the `DATABASE_URL` environment variable:
-```bash
-export DATABASE_URL="postgresql://username:password@localhost:5432/trainticketpro"
-```
-
-#### Option B: Using SQLite (Development)
-The application will fall back to in-memory storage if no database is configured.
-
-### 4. Environment Configuration
-Create a `.env` file in the root directory:
-```env
-DATABASE_URL=postgresql://username:password@localhost:5432/trainticketpro
-FLASK_ENV=development
-FLASK_DEBUG=1
-```
-
-### 5. Initialize Database
-The application will automatically create database tables on first run.
-
-## 🏃‍♂️ Running the Application
-
-### Development Mode
-```bash
-python server.py
-```
-
-The application will be available at `http://localhost:5000`
-
-### Production Mode
-```bash
-export FLASK_ENV=production
-python server.py
-```
-
-## 📁 Project Structure
+## Project Structure
 
 ```
-TrainTicketPro/
-├── assets/                 # Static assets (logos, images)
-├── css/                   # Stylesheets
-│   ├── main.css          # Main styles
-│   ├── styles.css        # Component styles
+chukchukgo/
+├── app.py                 # Main Flask application
+├── run.py                 # Application entry point
+├── requirements.txt       # Python dependencies
+├── .env                   # Environment variables
+├── index.html            # Main HTML page
+├── css/                  # Stylesheets
+│   ├── styles.css        # Main styles
+│   ├── main.css          # Additional styles
 │   └── new-features.css  # Feature-specific styles
-├── js/                   # JavaScript files
-│   ├── main.js          # Main application logic
-│   ├── booking.js       # Booking functionality
-│   ├── payment.js       # Payment processing
-│   └── validation.js    # Form validation
-├── server/              # Server-side code
-│   ├── index.ts         # TypeScript server entry
-│   ├── db.ts           # Database operations
-│   └── storage.ts      # Data storage utilities
-├── src/main/java/      # Java servlet components
-│   └── com/chukchukgo/
-│       ├── dao/        # Data Access Objects
-│       ├── models/     # Data models
-│       ├── servlets/   # Java servlets
-│       └── utils/      # Utility classes
-├── server.py           # Flask application
-├── index.html          # Main application page
-├── package.json        # Node.js dependencies
-└── README.md          # This file
+├── js/                   # Original JavaScript files
+│   ├── main.js
+│   ├── booking.js
+│   ├── payment.js
+│   └── validation.js
+└── static/               # New frontend assets
+    ├── js/
+    │   ├── api.js        # API client
+    │   └── app.js        # Main application logic
+    └── css/
+        ├── styles.css    # Style imports
+        └── app.css       # New application styles
 ```
 
-## 🔧 API Endpoints
+## API Endpoints
 
 ### Authentication
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/login` - User login
 
 ### Train Operations
-- `GET /api/trains` - Search trains
-- `GET /search` - Web-based train search
+- `GET /api/trains/search` - Search trains
+- `GET /api/stations` - Get station list
 
-### Booking Management
+### Booking Operations
 - `POST /api/bookings` - Create new booking
-- `GET /api/pnr/<pnr>` - Get booking by PNR
+- `GET /api/pnr/<pnr>` - Get PNR status
 - `POST /api/bookings/<pnr>/cancel` - Cancel booking
 
-### Food Orders
-- `POST /api/food-orders` - Create food order
-- `GET /api/food-orders/<pnr>` - Get food orders for PNR
-- `POST /api/food-orders/<pnr>/<order_id>/cancel` - Cancel food order
+## Database Schema
 
-## 🎯 Usage Guide
+### Tables
+- **users**: User account information
+- **stations**: Railway station data
+- **trains**: Train information and schedules
+- **train_classes**: Available classes for each train
+- **bookings**: Ticket booking records
+- **passengers**: Passenger details for bookings
 
-### 1. Train Search
-1. Navigate to the homepage
-2. Enter source and destination stations
-3. Select journey date and travel class
-4. Choose number of passengers and quota
-5. Click "Search Trains"
+## Configuration
 
-### 2. Ticket Booking
-1. From search results, select a train
-2. Fill in passenger details
-3. Choose seat preferences
-4. Complete payment process
-5. Receive PNR confirmation
-
-### 3. PNR Status Check
-1. Click "PNR Status" in navigation
-2. Enter your PNR number
-3. View booking details and status
-
-### 4. Food Ordering
-1. Access TravelBites from navigation
-2. Enter PNR number
-3. Browse menu and select items
-4. Choose delivery station
-5. Complete order
-
-## 🔒 Security Features
-
-- **Input Validation**: Comprehensive form validation
-- **SQL Injection Protection**: Parameterized queries
-- **XSS Prevention**: Output sanitization
-- **CSRF Protection**: Token-based protection
-
-## 🧪 Testing
-
-### Manual Testing
-1. Test train search functionality
-2. Verify booking flow end-to-end
-3. Check PNR status retrieval
-4. Test food ordering system
-5. Validate cancellation processes
-
-### Automated Testing
-```bash
-# Run tests (when implemented)
-npm test
+### Environment Variables (.env)
+```
+DB_HOST=localhost
+DB_NAME=chukchukgo
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_PORT=5432
+FLASK_ENV=development
+SECRET_KEY=your-secret-key
+DEBUG=True
 ```
 
-## 🚀 Deployment
+## Features Implemented
 
-### Local Development
+### Frontend
+- ✅ Responsive design with Bootstrap 5
+- ✅ Real-time station search with autocomplete
+- ✅ Train search with filters
+- ✅ Interactive booking flow
+- ✅ PNR status checking
+- ✅ Ticket cancellation
+- ✅ User authentication forms
+- ✅ Loading indicators and error handling
+
+### Backend
+- ✅ RESTful API design
+- ✅ Database integration with PostgreSQL
+- ✅ User authentication with password hashing
+- ✅ Train search with date validation
+- ✅ Booking creation and management
+- ✅ PNR status retrieval
+- ✅ Cancellation with refund calculation
+- ✅ Error handling and validation
+
+## Development
+
+### Running in Development Mode
 ```bash
-python server.py
+export FLASK_ENV=development
+export DEBUG=True
+python run.py
 ```
 
-### Production Deployment
-1. Set up PostgreSQL database
-2. Configure environment variables
-3. Use a production WSGI server (Gunicorn)
-4. Set up reverse proxy (Nginx)
+### Database Migration
+The application automatically creates tables on first run. Sample data is also inserted for testing.
 
-## 🤝 Contributing
+### Adding New Features
+1. Add API endpoints in `app.py`
+2. Update frontend JavaScript in `static/js/app.js`
+3. Add new styles in `static/css/app.css`
+
+## Production Deployment
+
+### Using Gunicorn
+```bash
+pip install gunicorn
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
+```
+
+### Environment Setup
+- Set `FLASK_ENV=production`
+- Set `DEBUG=False`
+- Use a production PostgreSQL database
+- Configure proper secret keys
+
+## Migration Notes
+
+This project has been migrated from a Java-based architecture to a modern Python stack:
+
+### What Changed
+- **Backend**: Java Servlets → Python Flask
+- **Database**: MySQL → PostgreSQL
+- **Frontend**: JSP → Pure HTML/CSS/JavaScript
+- **Architecture**: Monolithic → API-based separation
+
+### What Stayed
+- Core functionality and features
+- UI design and user experience
+- Database schema structure
+- Business logic and validation rules
+
+## Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
-## 📝 License
+## License
 
-This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Team
-
-- **Frontend Development**: HTML5, CSS3, JavaScript
-- **Backend Development**: Python Flask, PostgreSQL
-- **UI/UX Design**: Bootstrap 5, Custom CSS
-- **Database Design**: PostgreSQL schema design
-
-## 📞 Support
-
-For support and questions:
-- Create an issue in the repository
-- Contact the development team
-- Check the documentation
-
-## 🔄 Version History
-
-- **v1.0.0** - Initial release with core booking features
-- **v1.1.0** - Added TravelBites food ordering system
-- **v1.2.0** - Enhanced UI/UX and mobile responsiveness
-
----
-
-**Note**: This is a demonstration project simulating Indian Railways booking system. It's not connected to the actual Indian Railways database and is intended for educational and portfolio purposes only. #   C h u k 
- 
- #   C h u k 
- 
- "# Chuk" 
-#   C h u k  
- #   C h u k C h u k  
- #   C h u k C h u k  
- #   C h u k C h u k  
- "# ChukChuk" 
-"# ChukGo" 
-"# ChukGOGO" 
-#   C h u k G O G O  
- "# ChukGOGO" 
+This project is licensed under the MIT License.
