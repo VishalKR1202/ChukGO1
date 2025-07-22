@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="75" cy="75" r="70" fill="#FFC107" />
+  
+  <!-- Plate outline -->
+  <ellipse cx="75" cy="80" rx="55" ry="25" fill="#FFFFFF" stroke="#333333" stroke-width="2" />
+  
+  <!-- Food on plate -->
+  <ellipse cx="75" cy="80" rx="35" ry="15" fill="#FFECB3" stroke="#E65100" stroke-width="1" />
+  
+  <!-- Steam coming from food -->
+  <path d="M65,60 Q70,40 75,60 Q80,40 85,60" fill="none" stroke="#95A5A6" stroke-width="3" stroke-linecap="round" />
+  
+  <!-- Spoon and fork -->
+  <path d="M40,75 Q35,65 40,55 Q45,65 40,75" fill="none" stroke="#555555" stroke-width="2" />
+  <path d="M110,75 L110,55 M105,55 L115,55" fill="none" stroke="#555555" stroke-width="2" />
+  
+  <!-- Text "TravelBites" -->
+  <path d="M30,115 H60 M45,115 V130" fill="none" stroke="#333333" stroke-width="3" />
+  <path d="M65,115 C65,115 65,130 75,130 C85,130 85,115 85,115" fill="none" stroke="#333333" stroke-width="3" />
+  <path d="M90,115 L98,130 L106,115" fill="none" stroke="#333333" stroke-width="3" />
+  <path d="M110,115 V130 L120,130" fill="none" stroke="#333333" stroke-width="3" />
+</svg>

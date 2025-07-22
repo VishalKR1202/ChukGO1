@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChukChukGO - Indian Railway Ticket Booking</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="assets/logo.svg" alt="ChukChukGO Logo" height="40">
+                ChukChukGO
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#pnrModal">PNR Status</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancellations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contactSection">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-light btn-sm ms-2" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-4 text-primary fw-bold">Book Your Train Journey</h1>
+                    <p class="lead">From Platform to Destination, Seamlessly</p>
+                    <p>ChukChukGO makes train travel booking simple, fast and reliable. Search, book, and manage your train tickets with ease.</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow search-card">
+                        <div class="card-body">
+                            <h3 class="card-title text-primary mb-4">Search Trains</h3>
+                            <form id="searchForm">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="fromStation" class="form-label">From</label>
+                                        <input type="text" class="form-control" id="fromStation" placeholder="Enter city or station" required list="stationList">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="toStation" class="form-label">To</label>
+                                        <input type="text" class="form-control" id="toStation" placeholder="Enter city or station" required list="stationList">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="journeyDate" class="form-label">Journey Date</label>
+                                        <input type="date" class="form-control" id="journeyDate" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="travelClass" class="form-label">Travel Class</label>
+                                        <select class="form-select" id="travelClass" required>
+                                            <option value="">Select Class</option>
+                                            <option value="SL">Sleeper (SL)</option>
+                                            <option value="3A">AC 3 Tier (3A)</option>
+                                            <option value="2A">AC 2 Tier (2A)</option>
+                                            <option value="1A">AC First Class (1A)</option>
+                                            <option value="CC">Chair Car (CC)</option>
+                                            <option value="EC">Executive Class (EC)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="passengers" class="form-label">Passengers</label>
+                                        <select class="form-select" id="passengers" required>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="quota" class="form-label">Quota</label>
+                                        <select class="form-select" id="quota">
+                                            <option value="GN">General</option>
+                                            <option value="CK">Tatkal</option>
+                                            <option value="LD">Ladies</option>
+                                            <option value="PH">Divyaang</option>
+                                            <option value="SS">Senior Citizen</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg">Search Trains</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Results Section (Initially Hidden) -->
+    <section id="searchResults" class="py-5 d-none">
+        <div class="container">
+            <h2 class="section-title text-center mb-4">Available Trains</h2>
+            <div class="alert alert-info">
+                <div class="d-flex">
+                    <i data-feather="info" class="me-2"></i>
+                    <div>
+                        <strong>Journey Details:</strong> <span id="journeySummary"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="train-filters mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">Sort By</span>
+                            <select class="form-select" id="sortTrains">
+                                <option value="departure">Departure Time</option>
+                                <option value="duration">Duration</option>
+                                <option value="price">Price</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">Filter</span>
+                            <select class="form-select" id="filterTrains">
+                                <option value="all">All Trains</option>
+                                <option value="morning">Morning Departure</option>
+                                <option value="afternoon">Afternoon Departure</option>
+                                <option value="evening">Evening Departure</option>
+                                <option value="night">Night Departure</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="trainList" class="train-list">
+                <!-- Train results will be dynamically populated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Why Choose ChukChukGO?</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-circle mb-3">
+                            <i data-feather="search"></i>
+                        </div>
+                        <h4>Easy Search</h4>
+                        <p>Find trains quickly with our smart search feature. Filter by timing, class, and more.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-circle mb-3">
+                            <i data-feather="credit-card"></i>
+                        </div>
+                        <h4>Secure Payment</h4>
+                        <p>Multiple payment options with end-to-end encryption for secure transactions.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-circle mb-3">
+                            <i data-feather="smartphone"></i>
+                        </div>
+                        <h4>PNR Updates</h4>
+                        <p>Real-time PNR status updates and notifications on your booking.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-circle mb-3">
+                            <i data-feather="map"></i>
+                        </div>
+                        <h4>Journey Information</h4>
+                        <p>Detailed information about stations, platforms, and routes.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-circle mb-3">
+                            <i data-feather="users"></i>
+                        </div>
+                        <h4>Group Booking</h4>
+                        <p>Easy booking for groups with special discounts and offers.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card text-center">
+                        <div class="icon-circle mb-3">
+                            <i data-feather="help-circle"></i>
+                        </div>
+                        <h4>24/7 Support</h4>
+                        <p>Round-the-clock customer support to assist with your bookings.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="process-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">How It Works</h2>
+            <div class="process-timeline">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="process-step">
+                            <div class="process-number">1</div>
+                            <h5>Search Trains</h5>
+                            <p>Enter your journey details including origin, destination, and travel date.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="process-step">
+                            <div class="process-number">2</div>
+                            <h5>Select Train</h5>
+                            <p>Choose from available trains and select your preferred class and seats.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="process-step">
+                            <div class="process-number">3</div>
+                            <h5>Passenger Details</h5>
+                            <p>Fill in passenger information and any special requirements.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="process-step">
+                            <div class="process-number">4</div>
+                            <h5>Payment & Confirmation</h5>
+                            <p>Make secure payment and receive instant booking confirmation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Routes Section -->
+    <section class="routes-section py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Popular Routes</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="route-card">
+                        <h5>Delhi - Mumbai</h5>
+                        <div class="route-details">
+                            <div class="route-line">
+                                <span class="station">Delhi</span>
+                                <span class="station">Mumbai</span>
+                            </div>
+                            <p>15+ daily trains</p>
+                            <button class="btn btn-sm btn-outline-primary" onclick="presetSearch('Delhi', 'Mumbai')">Search Trains</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="route-card">
+                        <h5>Chennai - Bangalore</h5>
+                        <div class="route-details">
+                            <div class="route-line">
+                                <span class="station">Chennai</span>
+                                <span class="station">Bangalore</span>
+                            </div>
+                            <p>12+ daily trains</p>
+                            <button class="btn btn-sm btn-outline-primary" onclick="presetSearch('Chennai', 'Bangalore')">Search Trains</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="route-card">
+                        <h5>Kolkata - Patna</h5>
+                        <div class="route-details">
+                            <div class="route-line">
+                                <span class="station">Kolkata</span>
+                                <span class="station">Patna</span>
+                            </div>
+                            <p>8+ daily trains</p>
+                            <button class="btn btn-sm btn-outline-primary" onclick="presetSearch('Kolkata', 'Patna')">Search Trains</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="route-card">
+                        <h5>Hyderabad - Chennai</h5>
+                        <div class="route-details">
+                            <div class="route-line">
+                                <span class="station">Hyderabad</span>
+                                <span class="station">Chennai</span>
+                            </div>
+                            <p>6+ daily trains</p>
+                            <button class="btn btn-sm btn-outline-primary" onclick="presetSearch('Hyderabad', 'Chennai')">Search Trains</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="route-card">
+                        <h5>Delhi - Lucknow</h5>
+                        <div class="route-details">
+                            <div class="route-line">
+                                <span class="station">Delhi</span>
+                                <span class="station">Lucknow</span>
+                            </div>
+                            <p>10+ daily trains</p>
+                            <button class="btn btn-sm btn-outline-primary" onclick="presetSearch('Delhi', 'Lucknow')">Search Trains</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="route-card">
+                        <h5>Mumbai - Ahmedabad</h5>
+                        <div class="route-details">
+                            <div class="route-line">
+                                <span class="station">Mumbai</span>
+                                <span class="station">Ahmedabad</span>
+                            </div>
+                            <p>7+ daily trains</p>
+                            <button class="btn btn-sm btn-outline-primary" onclick="presetSearch('Mumbai', 'Ahmedabad')">Search Trains</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Guidelines Section -->
+    <section class="safety-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Travel Guidelines & Safety</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="safety-card">
+                        <h4><i data-feather="shield" class="me-2"></i> Railway Safety Measures</h4>
+                        <ul class="safety-list">
+                            <li>Regular cleaning and sanitization of coaches</li>
+                            <li>Security checks at station entry points</li>
+                            <li>24x7 helpline available for emergencies</li>
+                            <li>Medical facilities available at major stations</li>
+                            <li>Fire safety equipment in all coaches</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="safety-card">
+                        <h4><i data-feather="alert-triangle" class="me-2"></i> Travel Tips</h4>
+                        <ul class="safety-list">
+                            <li>Arrive at the station at least 30 minutes before departure</li>
+                            <li>Keep your ID proof ready for verification</li>
+                            <li>Check PNR status before starting your journey</li>
+                            <li>Label your luggage with your name and contact details</li>
+                            <li>Be aware of your belongings at all times</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contactSection" class="contact-section py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Contact Us</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="contact-info">
+                        <h4>Customer Support</h4>
+                        <p><i data-feather="phone" class="me-2"></i> +91 1800-XXX-XXXX (Toll Free)</p>
+                        <p><i data-feather="mail" class="me-2"></i> support@chukchukgo.com</p>
+                        <p><i data-feather="clock" class="me-2"></i> 24/7 Customer Support</p>
+                        
+                        <h4 class="mt-4">Corporate Office</h4>
+                        <p><i data-feather="map-pin" class="me-2"></i> ChukChukGO Building, Railway Colony, New Delhi - 110001</p>
+                        
+                        <div class="social-links mt-4">
+                            <a href="#" class="social-icon"><i data-feather="facebook"></i></a>
+                            <a href="#" class="social-icon"><i data-feather="twitter"></i></a>
+                            <a href="#" class="social-icon"><i data-feather="instagram"></i></a>
+                            <a href="#" class="social-icon"><i data-feather="linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" class="form-control" id="subject" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="footer-brand">
+                        <img src="assets/logo.svg" alt="ChukChukGO Logo" height="30">
+                        <h5>ChukChukGO</h5>
+                        <p>From Platform to Destination, Seamlessly</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#pnrModal">PNR Status</a></li>
+                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancellations</a></li>
+                        <li><a href="#contactSection">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Policies</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Payment Methods</h5>
+                    <div class="payment-icons">
+                        <i class="payment-icon">Visa</i>
+                        <i class="payment-icon">MC</i>
+                        <i class="payment-icon">Amex</i>
+                        <i class="payment-icon">UPI</i>
+                        <i class="payment-icon">NetBanking</i>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ChukChukGO. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- PNR Status Modal -->
+    <div class="modal fade" id="pnrModal" tabindex="-1" aria-labelledby="pnrModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pnrModalLabel">Check PNR Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="pnrForm">
+                        <div class="mb-3">
+                            <label for="pnrNumber" class="form-label">PNR Number</label>
+                            <input type="text" class="form-control" id="pnrNumber" placeholder="Enter 10-digit PNR number" required pattern="[0-9]{10}">
+                            <div class="form-text">Enter your 10-digit PNR number to check the current status.</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Check Status</button>
+                    </form>
+                    <div id="pnrResult" class="mt-4 d-none">
+                        <!-- PNR results will be shown here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancellation Modal -->
+    <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelModalLabel">Cancellation & Refund Policy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-policy-tab" data-bs-toggle="tab" data-bs-target="#nav-policy" type="button" role="tab">Cancellation Policy</button>
+                            <button class="nav-link" id="nav-cancel-tab" data-bs-toggle="tab" data-bs-target="#nav-cancel" type="button" role="tab">Cancel Ticket</button>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active p-3" id="nav-policy" role="tabpanel">
+                            <h5>Cancellation Rules</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Cancellation Timing</th>
+                                            <th>Refund Percentage</th>
+                                            <th>Cancellation Fee</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>More than 48 hours before departure</td>
+                                            <td>100% minus cancellation fee</td>
+                                            <td>₹ 240 for AC classes, ₹ 120 for Sleeper</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Between 48 and 12 hours before departure</td>
+                                            <td>75% minus cancellation fee</td>
+                                            <td>₹ 240 for AC classes, ₹ 120 for Sleeper</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Between 12 and 6 hours before departure</td>
+                                            <td>50% minus cancellation fee</td>
+                                            <td>₹ 240 for AC classes, ₹ 120 for Sleeper</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Less than 6 hours before departure</td>
+                                            <td>No refund</td>
+                                            <td>Entire amount</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <h5 class="mt-4">Special Conditions</h5>
+                            <ul>
+                                <li>Tatkal tickets: Non-refundable except when cancelled by railways.</li>
+                                <li>VIKALP tickets: Refund as per normal cancellation rules.</li>
+                                <li>Train cancellation: Full refund without cancellation charges.</li>
+                                <li>Partial cancellations allowed for group bookings with applicable charges.</li>
+                            </ul>
+                            
+                            <h5 class="mt-4">Refund Process</h5>
+                            <p>Refunds are processed automatically to the original payment method used for booking. It can take 5-7 working days for the refund to reflect in your account. For any refund-related queries, please contact our customer support.</p>
+                        </div>
+                        <div class="tab-pane fade p-3" id="nav-cancel" role="tabpanel">
+                            <form id="cancelTicketForm">
+                                <div class="mb-3">
+                                    <label for="pnrCancel" class="form-label">PNR Number</label>
+                                    <input type="text" class="form-control" id="pnrCancel" placeholder="Enter 10-digit PNR number" required pattern="[0-9]{10}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="emailCancel" class="form-label">Registered Email</label>
+                                    <input type="email" class="form-control" id="emailCancel" placeholder="Email used during booking" required>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="confirmCancel" required>
+                                    <label class="form-check-label" for="confirmCancel">I understand and agree to the cancellation policy</label>
+                                </div>
+                                <button type="submit" class="btn btn-danger">Proceed to Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login to ChukChukGO</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="loginEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <div class="text-center mt-3">
+                            <a href="#" class="text-decoration-none">Forgot password?</a>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <p>Don't have an account?</p>
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Register Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Create Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phoneNumber" pattern="[0-9]{10}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="termsAgree" required>
+                            <label class="form-check-label" for="termsAgree">I agree to the Terms of Service and Privacy Policy</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <p>Already have an account?</p>
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookingModalLabel">Passenger Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="trainBookingDetails" class="alert alert-info mb-4">
+                        <!-- Train details will be shown here -->
+                    </div>
+                    
+                    <form id="passengerForm">
+                        <div id="passengerDetails">
+                            <!-- Passenger forms will be added dynamically here -->
+                        </div>
+                        
+                        <h5 class="mt-4">Contact Information</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="contactPhone" class="form-label">Mobile Number</label>
+                                <input type="tel" class="form-control" id="contactPhone" pattern="[0-9]{10}" required>
+                                <div class="form-text">Your ticket and updates will be sent to this number</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="contactEmail" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="contactEmail" required>
+                            </div>
+                        </div>
+                        
+                        <h5 class="mt-4">Travel Preferences</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="seatPreference" class="form-label">Seat Preference</label>
+                                <select class="form-select" id="seatPreference">
+                                    <option value="no">No Preference</option>
+                                    <option value="lower">Lower Berth</option>
+                                    <option value="middle">Middle Berth</option>
+                                    <option value="upper">Upper Berth</option>
+                                    <option value="side-lower">Side Lower</option>
+                                    <option value="side-upper">Side Upper</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="mealPreference" class="form-label">Meal Preference</label>
+                                <select class="form-select" id="mealPreference">
+                                    <option value="none">No Meal</option>
+                                    <option value="veg">Vegetarian</option>
+                                    <option value="non-veg">Non-Vegetarian</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="travelInsurance">
+                            <label class="form-check-label" for="travelInsurance">Add Travel Insurance for ₹15 per passenger</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100">Continue to Payment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalLabel">Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <nav>
+                                <div class="nav nav-tabs" id="payment-tab" role="tablist">
+                                    <button class="nav-link active" id="credit-tab" data-bs-toggle="tab" data-bs-target="#credit-content" type="button" role="tab">Credit/Debit Card</button>
+                                    <button class="nav-link" id="upi-tab" data-bs-toggle="tab" data-bs-target="#upi-content" type="button" role="tab">UPI</button>
+                                    <button class="nav-link" id="netbanking-tab" data-bs-toggle="tab" data-bs-target="#netbanking-content" type="button" role="tab">Net Banking</button>
+                                    <button class="nav-link" id="wallet-tab" data-bs-toggle="tab" data-bs-target="#wallet-content" type="button" role="tab">Wallets</button>
+                                </div>
+                            </nav>
+                            <div class="tab-content p-3 border border-top-0 rounded-bottom" id="payment-content">
+                                <div class="tab-pane fade show active" id="credit-content" role="tabpanel">
+                                    <form id="cardPaymentForm">
+                                        <div class="mb-3">
+                                            <label for="cardNumber" class="form-label">Card Number</label>
+                                            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="expiryDate" class="form-label">Expiry Date</label>
+                                                <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="cvv" class="form-label">CVV</label>
+                                                <input type="password" class="form-control" id="cvv" maxlength="3" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="cardName" class="form-label">Name on Card</label>
+                                            <input type="text" class="form-control" id="cardName" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Pay Now</button>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="upi-content" role="tabpanel">
+                                    <form id="upiForm">
+                                        <div class="mb-3">
+                                            <label for="upiId" class="form-label">UPI ID</label>
+                                            <input type="text" class="form-control" id="upiId" placeholder="yourid@upi" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Pay Now</button>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="netbanking-content" role="tabpanel">
+                                    <form id="netbankingForm">
+                                        <div class="mb-3">
+                                            <label for="bankSelect" class="form-label">Select Bank</label>
+                                            <select class="form-select" id="bankSelect" required>
+                                                <option value="">Select a Bank</option>
+                                                <option value="sbi">State Bank of India</option>
+                                                <option value="hdfc">HDFC Bank</option>
+                                                <option value="icici">ICICI Bank</option>
+                                                <option value="axis">Axis Bank</option>
+                                                <option value="pnb">Punjab National Bank</option>
+                                                <option value="other">Other Banks</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Continue to Bank Payment Page</button>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="wallet-content" role="tabpanel">
+                                    <form id="walletForm">
+                                        <div class="mb-3">
+                                            <label class="form-label">Select Wallet</label>
+                                            <div class="row wallet-options">
+                                                <div class="col-6 col-md-4 mb-3">
+                                                    <div class="form-check wallet-option">
+                                                        <input class="form-check-input" type="radio" name="wallet" id="paytm" value="paytm" required>
+                                                        <label class="form-check-label" for="paytm">Paytm</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-4 mb-3">
+                                                    <div class="form-check wallet-option">
+                                                        <input class="form-check-input" type="radio" name="wallet" id="phonepe" value="phonepe">
+                                                        <label class="form-check-label" for="phonepe">PhonePe</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-4 mb-3">
+                                                    <div class="form-check wallet-option">
+                                                        <input class="form-check-input" type="radio" name="wallet" id="amazonpay" value="amazonpay">
+                                                        <label class="form-check-label" for="amazonpay">Amazon Pay</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-4 mb-3">
+                                                    <div class="form-check wallet-option">
+                                                        <input class="form-check-input" type="radio" name="wallet" id="freecharge" value="freecharge">
+                                                        <label class="form-check-label" for="freecharge">Freecharge</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-4 mb-3">
+                                                    <div class="form-check wallet-option">
+                                                        <input class="form-check-input" type="radio" name="wallet" id="mobikwik" value="mobikwik">
+                                                        <label class="form-check-label" for="mobikwik">MobiKwik</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Pay Now</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="payment-summary">
+                                <h5>Booking Summary</h5>
+                                <div id="paymentSummary">
+                                    <!-- Will be filled dynamically -->
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between">
+                                    <strong>Total Amount:</strong>
+                                    <strong id="totalFare">₹ 0</strong>
+                                </div>
+                                <div class="mt-3 payment-security">
+                                    <small><i data-feather="lock" class="me-1"></i> Your payment is secure and encrypted</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="successModalLabel">Booking Confirmed!</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="success-icon mb-4">
+                        <i data-feather="check-circle" width="60" height="60" stroke="#28a745"></i>
+                    </div>
+                    <h4>Your ticket has been booked successfully</h4>
+                    <p class="mb-4">Your PNR number is: <strong id="confirmationPNR">1234567890</strong></p>
+                    <p>Booking details have been sent to your email and phone number.</p>
+                    <div class="alert alert-info mt-3">
+                        <small><i data-feather="info" class="me-1"></i> Please keep your ID proof ready for verification during travel.</small>
+                    </div>
+                    <div id="downloadTicketContainer" class="mt-4">
+                        <!-- E-ticket download button will be added here by JavaScript -->
+                        <button class="btn btn-outline-secondary">Print Ticket</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Station List Datalist -->
+    <datalist id="stationList">
+        <option value="Delhi">Delhi (DLI)</option>
+        <option value="Mumbai">Mumbai (CSTM)</option>
+        <option value="Kolkata">Kolkata (HWH)</option>
+        <option value="Chennai">Chennai (MAS)</option>
+        <option value="Bangalore">Bangalore (SBC)</option>
+        <option value="Hyderabad">Hyderabad (SC)</option>
+        <option value="Ahmedabad">Ahmedabad (ADI)</option>
+        <option value="Pune">Pune (PUNE)</option>
+        <option value="Jaipur">Jaipur (JP)</option>
+        <option value="Lucknow">Lucknow (LKO)</option>
+        <option value="Kanpur">Kanpur (CNB)</option>
+        <option value="Nagpur">Nagpur (NGP)</option>
+        <option value="Patna">Patna (PNBE)</option>
+        <option value="Bhopal">Bhopal (BPL)</option>
+        <option value="Indore">Indore (INDB)</option>
+        <option value="Chandigarh">Chandigarh (CDG)</option>
+        <option value="Guwahati">Guwahati (GHY)</option>
+        <option value="Cochin">Cochin (ERS)</option>
+        <option value="Trivandrum">Trivandrum (TVC)</option>
+        <option value="Vadodara">Vadodara (BRC)</option>
+    </datalist>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/booking.js"></script>
+    <script src="js/payment.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Initialize Feather icons
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+        });
+    </script>
+</body>
+</html>

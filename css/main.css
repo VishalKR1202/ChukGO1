@@ -1,0 +1,645 @@
+/* Additional Custom Styles for ChukChukGO */
+
+/* Current Time Display */
+.current-time {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px 12px;
+    border-radius: 4px;
+    margin-left: 15px;
+    line-height: 1.2;
+}
+
+#time-display {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.date-small {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+@media (max-width: 767px) {
+    .current-time {
+        display: none;
+    }
+}
+
+/* Train Search Results Styling */
+#searchResults {
+    transition: all 0.5s ease;
+}
+
+/* Filter Panel Styles */
+.filter-panel {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.filter-section {
+    padding-bottom: 12px;
+}
+
+.filter-heading {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #555;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.filter-options .form-check {
+    margin-bottom: 6px;
+}
+
+.filter-options .form-check-label {
+    font-size: 0.85rem;
+    color: #444;
+}
+
+.result-actions {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+}
+
+.date-navigation .btn {
+    font-size: 0.82rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Filter responsive styles */
+@media (max-width: 767px) {
+    .result-actions {
+        flex-direction: column;
+    }
+    
+    .date-navigation {
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.train-details {
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.train-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #e5e5e5;
+}
+
+.train-info-primary {
+    margin-right: 15px;
+}
+
+.train-number-name {
+    font-weight: bold;
+    color: #3a2559;
+    font-size: 1.1rem;
+}
+
+.train-runs-on {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+}
+
+.train-timing {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    position: relative;
+}
+
+.train-timing::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 100px;
+    right: 100px;
+    height: 1px;
+    border-top: 1px dashed #bdc3c7;
+}
+
+.train-departure, .train-arrival {
+    text-align: center;
+    z-index: 1;
+}
+
+.train-time {
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
+
+.train-station {
+    font-size: 0.9rem;
+}
+
+.train-date {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+}
+
+.train-duration {
+    text-align: center;
+    z-index: 1;
+    background-color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 1px solid #e5e5e5;
+}
+
+.train-duration-time {
+    font-weight: 500;
+    color: #8e44ad;
+}
+
+.train-fare-seats {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    border-top: 1px dashed #e5e5e5;
+    flex-wrap: wrap;
+}
+
+.train-class {
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.train-class:hover {
+    border-color: #8e44ad;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.train-class-selected {
+    border-color: #8e44ad;
+    background-color: #f5eeff;
+}
+
+.class-type {
+    font-weight: 500;
+    color: #3a2559;
+}
+
+.class-fare {
+    font-weight: bold;
+    color: #8e44ad;
+    margin: 5px 0;
+}
+
+.class-availability {
+    font-size: 0.85rem;
+}
+
+.avl-available {
+    color: #27ae60;
+}
+
+.avl-rac {
+    color: #f39c12;
+}
+
+.avl-waiting {
+    color: #e74c3c;
+}
+
+.book-btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+/* Date Navigation */
+.date-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.date-nav-btn {
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.date-nav-btn svg {
+    margin-right: 5px;
+}
+
+.date-display {
+    font-weight: 500;
+    padding: 5px 15px;
+    border-radius: 4px;
+    background-color: #f5eeff;
+    color: #8e44ad;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0,0,0,0.1);
+    border-left-color: #8e44ad;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Passenger Form */
+.passenger-forms {
+    margin-top: 20px;
+}
+
+.passenger-form {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.passenger-form-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.remove-passenger {
+    color: #e74c3c;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 0.9rem;
+}
+
+.form-row {
+    margin-bottom: 15px;
+}
+
+/* Booking Summary */
+.booking-summary {
+    background-color: #f8f9fa;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.booking-summary-title {
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.summary-total {
+    font-weight: bold;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e5e5e5;
+}
+
+/* Seat Selection */
+.coach-layout {
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.coach-title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.berth-legend {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin: 5px;
+    font-size: 0.9rem;
+}
+
+.legend-color {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border-radius: 3px;
+}
+
+.available-seat {
+    background-color: #27ae60;
+}
+
+.booked-seat {
+    background-color: #e74c3c;
+}
+
+.your-seat {
+    background-color: #3498db;
+}
+
+.sleeper-coach {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.berth-set {
+    width: 90px;
+    height: 160px;
+    margin: 10px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    position: relative;
+}
+
+.berth {
+    position: absolute;
+    width: 80px;
+    height: 30px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.berth:hover {
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.berth.available {
+    background-color: #27ae60;
+    color: white;
+}
+
+.berth.booked {
+    background-color: #e74c3c;
+    color: white;
+    cursor: not-allowed;
+}
+
+.berth.selected {
+    background-color: #3498db;
+    color: white;
+}
+
+.lower {
+    top: 10px;
+    left: 5px;
+}
+
+.middle {
+    top: 50px;
+    left: 5px;
+}
+
+.upper {
+    top: 90px;
+    left: 5px;
+}
+
+.side-lower {
+    top: 130px;
+    left: 5px;
+}
+
+.side-upper {
+    top: 130px;
+    left: 5px;
+}
+
+.ac-coach {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Payment Methods */
+.payment-methods {
+    margin-top: 20px;
+}
+
+.payment-method {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-method:hover {
+    border-color: #8e44ad;
+}
+
+.payment-method-selected {
+    border-color: #8e44ad;
+    background-color: #f5eeff;
+}
+
+.payment-method-header {
+    display: flex;
+    align-items: center;
+}
+
+.payment-method-icon {
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
+
+.payment-method-details {
+    display: none;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.payment-method-details.show {
+    display: block;
+}
+
+/* PNR Status */
+.pnr-status-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.pnr-header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #e5e5e5;
+    margin-bottom: 15px;
+}
+
+.pnr-status-info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.pnr-status-item {
+    flex: 1 0 150px;
+    margin-bottom: 15px;
+}
+
+.pnr-label {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin-bottom: 5px;
+}
+
+.pnr-value {
+    font-weight: 500;
+}
+
+.passenger-list {
+    margin-top: 20px;
+}
+
+.passenger-list-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.passenger-item {
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.passenger-item:last-child {
+    border-bottom: none;
+}
+
+.passenger-detail {
+    flex: 1 0 150px;
+    margin-bottom: 5px;
+}
+
+.pnr-status-confirmed {
+    color: #27ae60;
+}
+
+.pnr-status-rac {
+    color: #f39c12;
+}
+
+.pnr-status-waitlist {
+    color: #e74c3c;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .train-timing {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .train-timing::after {
+        display: none;
+    }
+    
+    .train-departure, .train-arrival {
+        margin-bottom: 15px;
+    }
+    
+    .train-duration {
+        margin-bottom: 15px;
+    }
+    
+    .train-class {
+        min-width: 45%;
+    }
+    
+    .berth-set {
+        width: 80px;
+        height: 140px;
+        margin: 5px;
+    }
+    
+    .berth {
+        width: 70px;
+        height: 25px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .train-class {
+        min-width: 100%;
+    }
+    
+    .train-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .train-info-secondary {
+        margin-top: 10px;
+    }
+}
